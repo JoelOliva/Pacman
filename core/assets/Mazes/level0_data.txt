@@ -1,0 +1,13 @@
+0 15 90 105
+41 42 53 52
+1 0 0 0 0 0 0 0
+
+**The purpose of this file**
+The first four represent the position of the four big dots in each level
+
+On the second line, the first two numbers represent the ghost chamber gate
+and the third on the second line is to mark the position of an empty spot in the ghost chamber.
+Knowing this position is valuable as it means we can avoid drawing a dot there. The last on
+the second line represents the respawn point.
+
+The third line represents items count in this order: cherry, strawberry, orange, apple, melon, galaxian boss, bell, key

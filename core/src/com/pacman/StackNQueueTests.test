@@ -1,0 +1,359 @@
+package com.pacman;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
+import org.junit.Test;
+
+/**
+ * @author Joel Oliva, Yian Yue
+ */
+public class StackNQueueTests
+{
+	@Test
+	public void add_first_test()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_first(5);
+
+		System.out.println(list);
+		assertEquals(5, (int) list.get_first());
+		assertEquals(1, list.size());
+		System.out.println(list);
+		
+		list.add_first(6);
+		list.add_first(9);
+		list.add_first(2);
+		
+		assertEquals(2, (int) list.get_first());
+		System.out.println(list);
+	}
+	
+	@Test
+	public void add_last_test()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_first(0);
+		list.add_last(5);
+		
+		assertEquals(0, (int) list.get_first());
+		assertEquals(5, (int) list.get_last());
+		System.out.println(list);
+		
+		StackNQueue list2 = new StackNQueue();
+		list2.add_last(3);
+		
+		assertEquals(3, (int) list2.get_first());
+		assertEquals(3, (int) list2.get_last());
+		System.out.println(list2);
+	}
+	
+	@Test
+	public void expand_test()
+	{
+		StackNQueue list = new StackNQueue();
+		
+		for (int iter = 0; iter < 1025; iter++)
+			list.add_first(iter);
+		
+		assertEquals(1024, (int) list.get_first());
+		assertEquals(1025, list.size());
+		assertEquals(0, (int) list.get_last());
+		
+		list.add_first(6);
+		assertEquals(6, (int) list.get_first());
+		assertEquals(0, (int) list.get_last());
+		
+		StackNQueue list2 = new StackNQueue();
+
+		for (int iter = 0; iter < 1025; iter++)
+			list2.add_last(iter);
+
+		assertEquals(0, (int) list2.get_first());
+		assertEquals(1025, list2.size());
+		assertEquals(1024, (int) list2.get_last());
+		
+		list2.add_last(7);
+		assertEquals(0, (int) list2.get_first());
+		assertEquals(7, (int) list2.get_last());
+		
+		StackNQueue list3 = new StackNQueue();
+
+		for (int iter = 0; iter < 51; iter++)
+			list3.add_middle(0, iter);
+
+		assertEquals(0, (int) list3.get_first());
+		assertEquals(51, list3.size());
+		assertEquals(1, (int) list3.get_last());
+		
+		list3.add_last(7);
+		assertEquals(0, (int) list3.get_first());
+		assertEquals(7, (int) list3.get_last());
+		System.out.println(list3);
+	}
+	
+	@Test
+	public void add_middle_test()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_middle(7, 2);
+		
+		assertEquals(2, (int) list.get_first());
+		assertEquals(2, (int) list.get_last());
+		System.out.println(list);
+		
+		StackNQueue list2 = new StackNQueue();
+		list2.add_first(4);
+		list2.add_last(6);
+		list2.add_middle(0, 5);
+		
+		assertEquals(4, (int) list2.get_first());
+		assertEquals(6, (int) list2.get_last());
+		System.out.println(list2);
+		
+		StackNQueue list3 = new StackNQueue();
+		list3.add_middle(0, 7);
+		list3.add_middle(0, 3);
+		list3.add_middle(0, 1);
+		list3.add_middle(2, 9);
+		list3.add_middle(10, 8);
+		
+		assertEquals(7, (int) list3.get_first());
+		assertEquals(8, (int) list3.get_last());
+		System.out.println(list3);
+	}
+	
+	@Test(expected = NoSuchElementException.class)
+	public void get_first_test()
+	{
+		StackNQueue list = new StackNQueue();
+		list.get_first();
+	}
+
+	@Test(expected = NoSuchElementException.class)
+	public void get_last_test()
+	{
+		StackNQueue list = new StackNQueue();
+		list.get_last();
+	}
+	
+	@Test(expected = NoSuchElementException.class)
+	public void remove_first_test1()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_first(5);
+		list.remove_first();
+		list.get_first();
+	}
+	
+	@Test(expected = NoSuchElementException.class)
+	public void remove_last_test1()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_last(5);
+		list.remove_last();
+		list.get_last();
+	}
+
+	@Test
+	public void remove_first_test2()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_first(6);
+		list.add_middle(0, 2);
+		list.add_middle(0, 7);
+		list.remove_first();
+		
+		assertEquals(7, (int) list.get_first());
+		System.out.println(list);
+	}
+	
+	@Test
+	public void remove_last_test()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_first(4);
+		list.add_last(5);
+		list.add_middle(0, 9);
+		
+		
+		System.out.println(list);
+		assertEquals(5, (int) list.remove_last());
+		System.out.println(list);
+		
+		assertEquals(9, (int) list.get_last());
+
+		StackNQueue list2 = new StackNQueue();
+		list2.add_first(3);
+		
+		System.out.println(list2);
+		assertEquals(3, (int) list2.remove_last());
+		System.out.println(list2);
+	}
+	
+	@Test
+	public void contains_test()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_first(8);
+		list.add_last(5);
+		list.add_last(2);
+		list.add_last(9);
+		
+		assertFalse(list.contains(7));
+		assertTrue(list.contains(2));
+		assertTrue(list.contains(8));
+		assertTrue(list.contains(9));
+		
+		StackNQueue list2 = new StackNQueue();
+		
+		assertFalse(list2.contains(9));
+		
+//		StackNQueue list3 = new StackNQueue();
+//		list3.add_first(null);
+//
+//		assertTrue(list3.contains(null));
+//		System.out.println(list3);
+	}
+
+	@Test
+	public void contains_recursive_test()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_first(8);
+		list.add_last(5);
+		list.add_last(2);
+		list.add_last(9);
+		
+		assertFalse(list.contains_recursive(7));
+		assertTrue(list.contains_recursive(2));
+		assertTrue(list.contains_recursive(8));
+		assertTrue(list.contains_recursive(9));
+		
+		StackNQueue list2 = new StackNQueue();
+		
+		assertFalse(list2.contains_recursive(9));
+
+		StackNQueue list3 = new StackNQueue();
+//		list3.add_first(null);
+//
+//		assertTrue(list3.contains_recursive(null));
+//		System.out.println(list3);
+	}
+	
+	@Test
+	public void reverse()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_first(4);
+		list.add_last(2);
+		list.add_last(9);
+		list.add_last(8);
+
+		System.out.println(list);
+		list.reverse();
+		System.out.println(list);
+		
+		assertEquals(4, list.size());
+		assertEquals(8, (int) list.get_first());
+		assertEquals(4, (int) list.get_last());
+	}
+	
+	@Test
+	public void clear()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_first(3);
+		list.add_first(9);
+		list.add_last(1);
+		list.add_last(7);
+		list.add_middle(2, 0);
+		
+		System.out.println(list);
+		assertEquals(5, list.size());
+		assertEquals(9, (int) list.get_first());
+		assertEquals(7, (int) list.get_last());
+		
+		list.clear();
+		
+		assertEquals(0, list.size());
+	}
+	
+	@Test
+	public void to_ArrayList_post_recurse_test()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_middle(5, 6);;
+		list.add_last(2);
+		list.add_first(0);
+		list.add_first(4);
+		list.add_last(3);
+		
+		assertEquals(5, list.size());
+		assertEquals(4, (int) list.get_first());
+		assertEquals(3, (int) list.get_last());
+		System.out.println(list);
+		
+		ArrayList array_list = list.to_ArrayList_post_recurse();
+		System.out.println(array_list);
+		assertEquals(5, array_list.size());
+		assertEquals(3, (int) array_list.get(0));
+		assertEquals(4, (int) array_list.get(4));
+		assertArrayEquals(new Integer[] {3, 2, 6, 0, 4}, array_list.toArray());
+	}
+
+	@Test
+	public void to_ArrayList()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_middle(5, 6);;
+		list.add_last(2);
+		list.add_first(0);
+		list.add_first(4);
+		list.add_last(3);
+		
+		assertEquals(5, list.size());
+		assertEquals(4, (int) list.get_first());
+		assertEquals(3, (int) list.get_last());
+		System.out.println(list);
+		
+		ArrayList array_list = list.to_ArrayList();
+		System.out.println(array_list);
+		assertEquals(5, array_list.size());
+		assertEquals(4, (int) array_list.get(0));
+		assertEquals(3, (int) array_list.get(4));
+		assertArrayEquals(new Integer[] {4, 0, 6, 2, 3}, array_list.toArray());
+	}
+	
+	@Test
+	public void size_test()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_middle(0, 3);
+		list.add_first(7);
+		list.add_last(8);
+		list.add_last(4);
+		
+		assertEquals(4, list.size());
+		
+		StackNQueue list2 = new StackNQueue();
+		assertEquals(0, list2.size());
+	}
+	
+	@Test
+	public void compute_size_recursive_test()
+	{
+		StackNQueue list = new StackNQueue();
+		list.add_middle(0, 3);
+		list.add_first(7);
+		list.add_last(8);
+		list.add_last(4);
+		
+		assertEquals(4, list.compute_size_recursive());
+		
+		StackNQueue list2 = new StackNQueue();
+		assertEquals(0, list2.compute_size_recursive());
+	}
+}
