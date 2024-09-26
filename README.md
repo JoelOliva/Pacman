@@ -1,5 +1,4 @@
 # Pacman
-A Pacman clone created using Java and the LibGDX framework. This is an older project I created at the end of my freshman year at university. Deployment is set up for desktop and web builds though because of the framework, builds for mobile should be possible with very little work.
 
 ![Pacman](https://i.imgur.com/dxAQDZZ.png)
 
