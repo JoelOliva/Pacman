@@ -1,4 +1,5 @@
 # Pacman
+A Pacman clone created using Java and the LibGDX framework.
 
 ![Pacman](https://i.imgur.com/dxAQDZZ.png)
 
